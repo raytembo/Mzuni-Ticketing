@@ -1,0 +1,2 @@
+user: admin@mail.com
+password: mzuni123456

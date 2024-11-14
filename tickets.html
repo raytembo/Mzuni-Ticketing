@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tickets</title>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+</head>
+<body> 
+        <div>
+             <form id="ticketForm">
+                        <h2>BUY A TICKET</h2>
+                        <br>
+                        <h4>Name</h4>
+                        <input type="text" id="CustomerName" name="username" autocomplete="true">
+                        <br>
+                        <h4>Email</h4>
+                        <input type="email" id="CustomerEmail" name="userEmail" autocomplete="true">
+                        <br>
+                        <h4>Phone</h4>
+                        <input type="tel" id="CustomerPhone" required maxlength="10" name="userPhone" autocomplete="true">
+                        
+                        <h3>Choose your ticket type</h3>
+                        <br>
+                        <select id="matchType" name="matchType">
+                            <option value ="Next Match">Next Match</option>
+                            <option value ="First Upcoming Match">First Upcoming Match</option>
+                            <option value ="Second Upcoming Match">Second Upcoming Match</option>
+                            <option value ="Third Upcoming Match">Third Upcoming Match</option>
+                            <option value ="Last Upcoming Match">Last Upcoming Match</option>
+                        </select>
+                        
+                        <h3>Choose your ticket type</h3>
+                        
+                        <select id="ticketType" name="ticketType">
+                            <option value ="Standard">Standard</option>
+                            <option value ="VIP">VIP</option>
+                            <option value ="VVIP">VVIP</option>
+                        </select>
+                        <br>
+                        
+                        <h3>How many tickets?</h3>
+                        <input type="number" id="ticketQuantity" value="2" name="ticketQuantity">
+                        <br>
+                        <br>
+                        <!-- Add other form fields as needed -->
+            
+                                <button id="sendTicketDetails">Done</button>    
+                </form>
+                <dialog id="myModal">
+                    <h2>Your ticket has been processed</h2>
+                    <p> Check your email for your ticket code.</p>
+                    <button id="close">Close</button>
+                </dialog>
+            
+        </div>
+        
+
+                                <script type="module">
+
+                                    // Import the functions you need from the SDKs you need
+                                    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+                                    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+                                    import { doc,getDocs,getDoc,getFirestore,collection,onSnapshot,addDoc,updateDoc,deleteDoc,setDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+                                            
+
+                                    // TODO: Add SDKs for Firebase products that you want to use
+                                    // https://firebase.google.com/docs/web/setup#available-libraries
+
+                                    // Your web app's Firebase configuration
+                                    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+                                    const firebaseConfig = {
+                                        apiKey: "AIzaSyBh6G23R0jLlMgHzBnwoj6EmFXP1wCgQbI",
+                                        authDomain: "tickets-6848f.firebaseapp.com",
+                                        projectId: "tickets-6848f",
+                                        storageBucket: "tickets-6848f.appspot.com",
+                                        messagingSenderId: "56292073441",
+                                        appId: "1:56292073441:web:a429c5383c3ec09fcebca0",
+                                        measurementId: "G-77DG9Q8DVL"
+                                                                        };
+
+                                        // Initialize Firebase
+                                        const app = initializeApp(firebaseConfig);
+                                        const analytics = getAnalytics(app);
+
+                                        const db = getFirestore(app);
+
+
+                                        // These varibles store data from HTML tag with the given IDs.
+                                        const finish_buttom = document.getElementById("ticketForm");
+                                        const testing = document.getElementById("test");
+                                        
+                                        // Random Code Generator
+                                        function generateRandomString(length) {
+                                            const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                                            const array = new Uint8Array(length);
+                                            crypto.getRandomValues(array);
+                                            return Array.from(array, char => charset[char % charset.length]).join('');
+                                            }
+                                            // This variable stores a 5 digit random code from method above.
+                                            var random_Code = generateRandomString(5);
+                                         
+                                            function openModal() {
+                                                var dialog = document.getElementById("myModal");
+                                                dialog.showModal(); // Open as a modal dialog
+                                            }
+
+                                            document.getElementById("close").addEventListener("click", function() {
+                                            document.getElementById("myModal").close();
+                                                });
+
+
+                                            
+                                         // This eventListener is triggered by a submit to send data to the database (Firebase)
+                                        finish_buttom.addEventListener("submit",(e)=>{
+                                            e.preventDefault()
+            
+                                            var customer_name = finish_buttom.username.value;
+                                            var customer_email = finish_buttom.userEmail.value;
+                                            var customer_Phone = finish_buttom.userPhone.value;
+                                            var customer_matchtype = finish_buttom.matchType.value;
+                                            var customer_tickettype = finish_buttom.ticketType.value;
+                                            var customer_ticketQuantity = finish_buttom.ticketQuantity.value;
+
+
+                                            var ticketRef = collection(db,"tickets");
+
+                                            const tickets =  addDoc(ticketRef,
+                                                {
+                                                    name: customer_name,
+                                                    email: customer_email,
+                                                    Phone: customer_Phone,
+                                                    Match: customer_matchtype,
+                                                    Ticket: customer_tickettype,
+                                                    Quantity: customer_ticketQuantity,
+                                                    Code: random_Code,
+                                                    timestamp: serverTimestamp()
+                                                }
+                                            
+                                            ).then(()=>{
+                                            // This a Simple Mail Transfer Protocol (SMTP) that allows send and receiving of email over the internet.
+                                            // This website provides this service https://smtpjs.com/v3/smtp.js
+                                            // This method sends the email to the user upon sucessfully buying a ticket.
+                                            Email.send({
+                                            Host : "smtp.elasticemail.com",
+                                            Username : "mzuniticketing@gmail.com",
+                                            Password : "96DB7255E94BE059542DD15EA101E9453BF7",
+                                            To : customer_email,
+                                            From : "mzuniticketing@gmail.com",
+                                            Subject : "Ticket Processing",
+                                            Body : "Here is your ticket code " + random_Code
+                                            }).then(()=>{
+                                                // this calls the open Modal function (Pop Up)
+                                                // This shows a message that confirms that data has been sent
+                                                openModal();
+                                            });
+                                            
+                                            }).catch((error)=>{
+                                                console.log(error);
+                                                //alert(error);
+                                            });
+
+                                        });
+                        </script>
+
+            </body>
+             
+</html>

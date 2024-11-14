@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Standings</title>
+</head>
+<body>
+    <h2>Update standing</h2>
+    <form id="NyasaBigBullets">
+        <h3>Nyasa Big Bullets</h3>
+        <input type="number" placeholder="Update Points" name="points">
+        <input type="number" placeholder="Update Wins" name="wins">
+        <input type="number" placeholder="Enter Loses" name="loses">
+        <input type="number" placeholder="Enter Draws" name="draws"> 
+        <button>Update Nyasa Big Bullets</button> 
+    </form>
+
+    <form id="MightyWanderers">
+        <h3>Mighty Wanderers</h3>
+        <input type="number" placeholder="Update Points" name="points">
+        <input type="number" placeholder="Update Wins" name="wins">
+        <input type="number" placeholder="Enter Loses" name="loses">
+        <input type="number" placeholder="Enter Draws" name="draws">
+        <button>Update Mighty Wanderers</button>   
+    </form>
+
+    <form id="SilverStrikers">
+        <h3>Silver Strikers</h3>
+        <input type="number" placeholder="Update Points" name="points">
+        <input type="number" placeholder="Update Wins" name="wins">
+        <input type="number" placeholder="Enter Loses" name="loses">
+        <input type="number" placeholder="Enter Draws" name="draws">
+        <button>Update Silver Strikers</button>   
+    </form>
+
+    <form id="MoyaleBarracksFC">
+        <h3>Moyale Barracks FC </h3>
+        <input type="number" placeholder="Update Points" name="points">
+        <input type="number" placeholder="Update Wins" name="wins">
+        <input type="number" placeholder="Enter Loses" name="loses">
+        <input type="number" placeholder="Enter Draws" name="draws">
+        <button>Update Moyale Barracks FC </button>   
+    </form>
+
+    <form id="ChitipaUnited">
+        <h3>Chitipa United</h3>
+        <input type="number" placeholder="Update Points" name="points">
+        <input type="number" placeholder="Update Wins" name="wins">
+        <input type="number" placeholder="Enter Loses" name="loses">
+        <input type="number" placeholder="Enter Draws" name="draws">
+        <button>Update Chitipa United</button>   
+    </form>
+
+    <form id="KarongaUnited">
+        <h3>Karonga United</h3>
+        <input type="number" placeholder="Update Points" name="points">
+        <input type="number" placeholder="Update Wins" name="wins">
+        <input type="number" placeholder="Enter Loses" name="loses">
+        <input type="number" placeholder="Enter Draws" name="draws">
+        <button>Update Karonga United</button>   
+    </form>
+
+    <form id="EkwendeniHammers">
+        <h3>Ekwendeni Hammers</h3>
+        <input type="number" placeholder="Update Points" name="points">
+        <input type="number" placeholder="Update Wins" name="wins">
+        <input type="number" placeholder="Enter Loses" name="loses">
+        <input type="number" placeholder="Enter Draws" name="draws">
+        <button>Update Ekwendeni Hammers</button>   
+    </form>
+
+    <form id="RedLions">
+        <h3>Red Lions</h3>
+        <input type="number" placeholder="Update Points" name="points">
+        <input type="number" placeholder="Update Wins" name="wins">
+        <input type="number" placeholder="Enter Loses" name="loses">
+        <input type="number" placeholder="Enter Draws" name="draws">
+        <button>Update Red Lions</button>   
+    </form>
+
+    <dialog id="myModal">
+      <h2>Update Sucessfull</h2>
+      <button id="close">Close</button>
+   </dialog>
+
+
+    <script type="module">
+      
+        // Import the functions you need from the SDKs you need
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+          import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+          import { doc,getDocs,getDoc,getFirestore,collection,onSnapshot,serverTimestamp,addDoc,updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+                  
+
+          // TODO: Add SDKs for Firebase products that you want to use
+          // https://firebase.google.com/docs/web/setup#available-libraries
+
+          // Your web app's Firebase configuration
+          // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+          // This is the firebase project ID.
+            const firebaseConfig = {
+              apiKey: "AIzaSyBh6G23R0jLlMgHzBnwoj6EmFXP1wCgQbI",
+              authDomain: "tickets-6848f.firebaseapp.com",
+              projectId: "tickets-6848f",
+              storageBucket: "tickets-6848f.appspot.com",
+              messagingSenderId: "56292073441",
+              appId: "1:56292073441:web:a429c5383c3ec09fcebca0",
+              measurementId: "G-77DG9Q8DVL"
+                                              };
+
+              // Initialize Firebase
+              const app = initializeApp(firebaseConfig);
+              const analytics = getAnalytics(app);
+              const db = getFirestore(app);
+
+              function openModal(){
+                  var dialog = document.getElementById("myModal");
+                  dialog.showModal(); // Open as a modal dialog
+                        }
+               document.getElementById("close").addEventListener("click", function() {
+               document.getElementById("myModal").close();
+              });
+
+              //These varibles store data from HTML tag with the given IDs. 
+              const bigbullets = document.getElementById("NyasaBigBullets");
+              const mightyWanderers = document.getElementById("MightyWanderers");
+              const silverStrikers = document.getElementById("SilverStrikers");
+              const moyaleBarracks = document.getElementById("MoyaleBarracksFC");
+              const chitipaUnited = document.getElementById("ChitipaUnited");
+              const karongaUnited = document.getElementById("KarongaUnited");
+              const ekwendeniHammers = document.getElementById("EkwendeniHammers");
+              const redLions = document.getElementById("RedLions");
+
+             //This event Listener is triggered by a submit.
+              bigbullets.addEventListener("submit",(e)=>{
+                 e.preventDefault()
+                //These varaible get the actual from user.
+                 var teamPoints = bigbullets.points.value;
+                 var teamWins = bigbullets.wins.value;
+                 var teamLoses = bigbullets.loses.value;
+                 var teamDraws = bigbullets.draws.value;
+                 // This variable stores a refererence to a document(Record) called Team with an ID 1.
+                 const firstTeam = doc(db,"Teams","1");
+                  // This method updates the data in the database.
+                  updateDoc(firstTeam,
+                    {
+                        Points:teamPoints,
+                        Wins:teamWins,
+                        Loses:teamLoses,
+                        Draws:teamDraws,
+                    }
+                                            
+                     ).then(()=>{
+                      openModal();
+                      
+                    }).catch((error)=>{
+                      console.log(error);
+                    });
+                    });
+                // The same logic was used like the event listener above.
+                // This also applies to the event listeners after this
+                mightyWanderers.addEventListener("submit",(e)=>{
+                 e.preventDefault()
+
+                 var teamPoints = mightyWanderers.points.value;
+                 var teamWins = mightyWanderers.wins.value;
+                 var teamLoses = mightyWanderers.loses.value;
+                 var teamDraws = mightyWanderers.draws.value;
+
+                 const secondTeam = doc(db,"Teams","2");
+
+                  updateDoc(secondTeam,
+                    {
+                        Points:teamPoints,
+                        Wins:teamWins,
+                        Loses:teamLoses,
+                        Draws:teamDraws,
+                    }
+                                            
+                     ).then(()=>{
+                      openModal();
+                      //  alert("Updated");
+                    }).catch((error)=>{
+                      console.log(error);
+                    });
+                    });
+                    
+                    silverStrikers.addEventListener("submit",(e)=>{
+                 e.preventDefault()
+
+                 var teamPoints = silverStrikers.points.value;
+                 var teamWins = silverStrikers.wins.value;
+                 var teamLoses = silverStrikers.loses.value;
+                 var teamDraws = silverStrikers.draws.value;
+
+                 const thirdTeam = doc(db,"Teams","3");
+
+                  updateDoc(thirdTeam,
+                    {
+                        Points:teamPoints,
+                        Wins:teamWins,
+                        Loses:teamLoses,
+                        Draws:teamDraws,
+                    }
+                                            
+                     ).then(()=>{
+                      openModal();
+                    }).catch((error)=>{
+                      console.log(error);
+                    });
+                    });
+                    
+                    moyaleBarracks.addEventListener("submit",(e)=>{
+                 e.preventDefault()
+
+                 var teamPoints = moyaleBarracks.points.value;
+                 var teamWins = moyaleBarracks.wins.value;
+                 var teamLoses = moyaleBarracks.loses.value;
+                 var teamDraws = moyaleBarracks.draws.value;
+
+                 const fourthTeam = doc(db,"Teams","4");
+
+                  updateDoc(fourthTeam,
+                    {
+                        Points:teamPoints,
+                        Wins:teamWins,
+                        Loses:teamLoses,
+                        Draws:teamDraws,
+                    }
+                                            
+                     ).then(()=>{
+                      openModal();
+                    }).catch((error)=>{
+                      console.log(error);
+                    });
+                    });
+
+                    chitipaUnited.addEventListener("submit",(e)=>{
+                 e.preventDefault()
+
+                 var teamPoints = chitipaUnited.points.value;
+                 var teamWins = chitipaUnited.wins.value;
+                 var teamLoses = chitipaUnited.loses.value;
+                 var teamDraws = chitipaUnited.draws.value;
+
+                 const fifthTeam = doc(db,"Teams","5");
+
+                  updateDoc(fifthTeam,
+                    {
+                        Points:teamPoints,
+                        Wins:teamWins,
+                        Loses:teamLoses,
+                        Draws:teamDraws,
+                    }
+                                            
+                     ).then(()=>{
+                      openModal();
+                    }).catch((error)=>{
+                      console.log(error);
+                    });
+                    });
+
+                    karongaUnited.addEventListener("submit",(e)=>{
+                 e.preventDefault()
+
+                 var teamPoints = karongaUnited.points.value;
+                 var teamWins = karongaUnited.wins.value;
+                 var teamLoses = karongaUnited.loses.value;
+                 var teamDraws = karongaUnited.draws.value;
+
+                 const sixthTeam = doc(db,"Teams","6");
+
+                  updateDoc(sixthTeam,
+                    {
+                        Points:teamPoints,
+                        Wins:teamWins,
+                        Loses:teamLoses,
+                        Draws:teamDraws,
+                    }
+                                            
+                     ).then(()=>{
+                      openModal();
+                    }).catch((error)=>{
+                      console.log(error);
+                    });
+                    });
+
+                    ekwendeniHammers.addEventListener("submit",(e)=>{
+                 e.preventDefault()
+
+                 var teamPoints = ekwendeniHammers.points.value;
+                 var teamWins = ekwendeniHammers.wins.value;
+                 var teamLoses = ekwendeniHammers.loses.value;
+                 var teamDraws = ekwendeniHammers.draws.value;
+
+                 const seventhTeam = doc(db,"Teams","7");
+
+                  updateDoc(seventhTeam,
+                    {
+                        Points:teamPoints,
+                        Wins:teamWins,
+                        Loses:teamLoses,
+                        Draws:teamDraws,
+                    }
+                                            
+                     ).then(()=>{
+                      openModal();
+                    }).catch((error)=>{
+                      console.log(error);
+                    });
+                    });
+
+                    redLions.addEventListener("submit",(e)=>{
+                 e.preventDefault()
+
+                 var teamPoints = redLions.points.value;
+                 var teamWins = redLions.wins.value;
+                 var teamLoses = redLions.loses.value;
+                 var teamDraws = redLions.draws.value;
+
+                 const lastTeam = doc(db,"Teams","8");
+
+                  updateDoc(lastTeam,
+                    {
+                        Points:teamPoints,
+                        Wins:teamWins,
+                        Loses:teamLoses,
+                        Draws:teamDraws,
+                    }
+                                            
+                     ).then(()=>{
+                      openModal();
+                    }).catch((error)=>{
+                      console.log(error);
+                    });
+                    });
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* Add your CSS styling here */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #555;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #555;
+            color: #fff;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #555;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+    <nav>
+        <a href="#upload">Upload Match Details</a> |
+        <a href="#update">Update Matches</a> |
+        <a href="#update-prices">Update Ticket Prices</a> |
+        <a href="#reports">Generate Reports</a> |
+        <a href="#scan-tickets">Scan Ticket Codes</a> |
+        <a href="#view-money">View Money Generated</a> |
+        <a href="#add-admin">Add New Admin</a> |
+        <a href="#post-news">Post News and Blogs</a>
+    </nav>
+
+    <section id="upload">
+        <h2>Upload Match Details</h2>
+        <form id="uploadForm">
+            <label for="matchTitle">Match Title:</label>
+            <input type="text" id="matchTitle" name="matchTitle" required>
+
+            <label for="matchDate">Match Date:</label>
+            <input type="date" id="matchDate" name="matchDate" required>
+
+            <!-- Add other form fields as needed -->
+
+            <button type="submit">Upload</button>
+        </form>
+    </section>
+
+    <section id="update">
+        <h2>Update Matches</h2>
+        <form id="updateForm">
+            <label for="matchToUpdate">Select Match to Update:</label>
+            <select id="matchToUpdate" name="matchToUpdate" required>
+                <!-- Populate this dynamically with existing matches -->
+                <option value="match1">Match 1</option>
+                <option value="match2">Match 2</option>
+            </select>
+
+            <label for="newMatchTitle">New Match Title:</label>
+            <input type="text" id="newMatchTitle" name="newMatchTitle" required>
+
+            <!-- Add other form fields as needed -->
+
+            <button type="submit">Update</button>
+        </form>
+    </section>
+
+    <section id="update-prices">
+        <h2>Update Ticket Prices</h2>
+        <form id="updatePricesForm">
+            <label for="matchToUpdatePrices">Select Match to Update Prices:</label>
+            <select id="matchToUpdatePrices" name="matchToUpdatePrices" required>
+                <!-- Populate this dynamically with existing matches -->
+                <option value="match1">Match 1</option>
+                <option value="match2">Match 2</option>
+            </select>
+
+            <label for="newTicketPrice">New Ticket Price:</label>
+            <input type="number" id="newTicketPrice" name="newTicketPrice" required>
+
+            <!-- Add other form fields as needed -->
+
+            <button type="submit">Update Prices</button>
+        </form>
+    </section>
+
+    <section id="reports">
+        <h2>Generate Reports</h2>
+        <!-- Add report generation elements here -->
+    </section>
+
+    <section id="scan-tickets">
+        <h2>Scan Ticket Codes</h2>
+        <label for="ticketCodeInput">Enter Ticket Code:</label>
+        <input type="text" id="ticketCodeInput" name="ticketCodeInput" required>
+        <button onclick="scanTicket()">Scan Ticket</button>
+        <p id="scanResult"></p>
+    </section>
+
+    <section id="view-money">
+        <h2>View Money Generated</h2>
+        <!-- Display the amount of money generated -->
+    </section>
+
+    <section id="add-admin">
+        <h2>Add New Admin</h2>
+        <form id="addAdminForm">
+            <!-- Add form fields for adding new admin -->
+            <button type="submit">Add Admin</button>
+        </form>
+    </section>
+
+    <section id="post-news">
+        <h2>Post News and Blogs</h2>
+        <form id="postNewsForm">
+            <!-- Add form fields for posting news and blogs -->
+            <button type="submit">Post</button>
+        </form>
+    </section>
+
+    <script>
+        // JavaScript for interactive features
+
+        // Example function for handling form submission (you would replace this with actual logic)
+        function submitForm(formId) {
+            const form = document.getElementById(formId);
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                // Example: Log form data to the console
+                const formData = new FormData(form);
+                for (const pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + pair[1]);
+                }
+            });
+        }
+
+        submitForm('uploadForm');
+        submitForm('updateForm');
+        submitForm('updatePricesForm');
+        submitForm('addAdminForm');
+        submitForm('postNewsForm');
+
+        // Example function for scanning tickets (replace with actual logic)
+        function scanTicket() {
+            const ticketCodeInput = document.getElementById('ticketCodeInput');
+            const scanResult = document.getElementById('scanResult');
+
+            // Example: Log the scanned ticket code to the console
+            console.log('Scanned Ticket Code:', ticketCodeInput.value);
+
+            // Example: Display the result on the page
+            scanResult.textContent = `Ticket scanned: ${ticketCodeInput.value}`;
+        }
+    </script>
+</body>
+</html>

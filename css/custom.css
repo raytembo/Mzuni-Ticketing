@@ -1,0 +1,42 @@
+html{
+  animation: transitionIn 0.85s;
+}
+
+@keyframes transitionIn{
+from{
+opacity: 0;
+transform: rotateX(-20deg);
+}
+
+to{
+
+  opacity: 1;
+transform: rotateX(0);
+
+}
+
+}
+
+.btn.btn-primary.py-3.px-4.mr-3{
+    background-color: rgb(39, 100, 180);
+    border-color: rgb(39, 100, 180);
+}
+.btn.btn-primary.py-3.px-4.mr-3:hover{
+    background-color: rgb(25, 26, 27);
+    border-color: rgb(25, 26, 27);
+}
+
+
+  
+  /* Add hover effect for navbar links */
+  .site-menu a:hover {
+    color: #007bff !important;
+  }
+
+ 
+  
+  /*contact form*/
+
+
+  
+  

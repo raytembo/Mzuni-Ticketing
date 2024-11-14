@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Admin Dashboard Main</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <nav>
+        <ul><a href="matchUpdates.html">Update Matches</a></ul>
+        <ul><a href="press.html">Update Press</a></ul>
+        <ul><a href="standings.html">Update Standings</a></ul>
+    </nav>
+
+    <button id="signOut">Sign Out</button>
+    
+    <dialog id="myModal">
+        <h2>Ticket Found</h2>
+        <button id="close">Close</button>
+    </dialog>
+
+    <dialog id="myModalTwo">
+        <h2>Ticket Not Found</h2>
+        <button id="closetwo">Close</button>
+    </dialog>
+
+
+    <div>
+        <h2>Search for ticket code</h2>
+        <input type="text" name="searchBar" id="searchBar">
+        <button id="tick">Search</button>
+
+    </div>
+
+    
+
+    <script type="module">
+          // Import the functions you need from the SDKs you need
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+          import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+          import { getAuth,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+          import { doc,getDocs,getDoc,getFirestore,collection,onSnapshot,serverTimestamp,addDoc} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+                  
+
+          // TODO: Add SDKs for Firebase products that you want to use
+          // https://firebase.google.com/docs/web/setup#available-libraries
+
+          // Your web app's Firebase configuration
+          // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+          // This is the firebase project ID.
+            const firebaseConfig = {
+              apiKey: "AIzaSyBh6G23R0jLlMgHzBnwoj6EmFXP1wCgQbI",
+              authDomain: "tickets-6848f.firebaseapp.com",
+              projectId: "tickets-6848f",
+              storageBucket: "tickets-6848f.appspot.com",
+              messagingSenderId: "56292073441",
+              appId: "1:56292073441:web:a429c5383c3ec09fcebca0",
+              measurementId: "G-77DG9Q8DVL"
+                                              };
+
+              // Initialize Firebase
+              const app = initializeApp(firebaseConfig);
+              const analytics = getAnalytics(app);
+              const db = getFirestore(app);
+              const auth = getAuth(app);
+              
+              // This function creates a popup called a modal.
+              // This pop up displays ticket found.
+              function openModal() {
+                var dialog = document.getElementById("myModal");
+                dialog.showModal(); // Open as a modal dialog
+               }
+               
+              // This function creates a popup called a modal.
+              // This pop up displays ticket not found.
+               function openModalTwo() {
+                var dialogtwo = document.getElementById("myModalTwo");
+                dialogtwo.showModal(); // Open as a modal dialog
+               }
+              
+              // This eventlistener is used to close the Pop up (modal) which displays Tickets found.
+              document.getElementById("close").addEventListener("click", function() {
+              document.getElementById("myModal").close();
+                 });
+              // This eventlistener is used to close the Pop up (modal) which displays Tickets not found.
+              document.getElementById("closetwo").addEventListener("click", function() {
+              document.getElementById("myModalTwo").close();
+                 });
+   
+              //These variables store data from the HTML tags with the given IDs.
+              const signOutButton = document.getElementById("signOut");
+              const ticketButton = document.getElementById("tick");
+
+             //This is an event Listener that signs a user out of the admin dashboard.
+              signOutButton.addEventListener("click",()=>{
+                // signOut() is a method from firebase that signs a user out.
+                signOut(auth).then(()=>{
+                    // This window redirects a user upon sucessfully signing out.   
+                    window.location.href = 'index.html';
+                }).catch((error)=>{
+                    // This prints out an error to the console.
+                    console.log(error.message)
+                })
+              });
+
+            
+                //This variable gets a reference to the collection(Table) called tickets
+                const ticketsRef = collection(db, 'tickets');
+                //This variable gets the data from the collection(Table) called tickets
+                const ticketSnapshot = await getDocs(ticketsRef);
+                //this variable stores an array of all the Ticket Codes in the collection (Table) called tickets
+                const ticketList = ticketSnapshot.docs.map(doc => doc.data().Code);
+               
+                async function tickets() {
+                    if (ticketList.indexOf((searchBarValue.value))==-1){
+                        //calls the Pop up (modal functions) for Ticket Not Found
+                        openModalTwo();
+                    }else{
+                        //calls the Pop up (modal functions) for Ticket Found
+                        openModal();
+                    } 
+            }
+
+        
+         // this eventlistener triggers the tickets function
+         // It is the search button, in the HTML document.
+         ticketButton.addEventListener("click", tickets);
+
+
+
+              
+
+
+    </script>
+    
+    
+</body>
+</html>
