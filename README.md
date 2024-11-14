@@ -6,7 +6,6 @@ Welcome to **Mzuni Ticketing**, the easiest way to buy and manage tickets for yo
 - [Introduction](#introduction)
 - [Features](#features)
 - [Ticket Pricing](#ticket-pricing)
-- [FAQs](#faqs)
 - [Contact](#contact)
 
 ---
