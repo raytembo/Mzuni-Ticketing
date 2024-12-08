@@ -1,6 +1,6 @@
-# Ticketing Service
+# Mzuni Ticketing Service
 
-Welcome to **Ticketing**, the easiest way to buy and manage tickets for your favorite football matches. Whether you're attending a thrilling league match or a high-stakes cup game, Mzuni Ticketing is here to ensure you never miss out on the action.
+Welcome to **Mzuni Ticketing**, the easiest way to buy and manage tickets for your favorite football matches. Whether you're attending a thrilling league match or a high-stakes cup game, Mzuni Ticketing is here to ensure you never miss out on the action.
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -12,7 +12,7 @@ Welcome to **Ticketing**, the easiest way to buy and manage tickets for your fav
 
 ## Introduction
 
-Mzuni Ticketing is a web-based platform that allows football fans to book tickets for various football matches, including league games, cup matches, and friendly fixtures. It supports easy online payment, ticket management, and a seamless user experience for fans attending games at Mzuni Stadium and other venues.
+MzuninTicketing is a web-based platform that allows football fans to book tickets for various football matches, including league games, cup matches, and friendly fixtures. It supports easy online payment, ticket management, and a seamless user experience for fans attending games at Mzuni Stadium and other venues.
 
 ### Our Vision
 To provide football fans with an accessible, reliable, and efficient ticketing service that enhances the matchday experience.
