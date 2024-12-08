@@ -1,6 +1,6 @@
-# Mzuni Ticketing Service
+# Ticketing Service
 
-Welcome to **Mzuni Ticketing**, the easiest way to buy and manage tickets for your favorite football matches. Whether you're attending a thrilling league match or a high-stakes cup game, Mzuni Ticketing is here to ensure you never miss out on the action.
+Welcome to **Ticketing**, the easiest way to buy and manage tickets for your favorite football matches. Whether you're attending a thrilling league match or a high-stakes cup game, Mzuni Ticketing is here to ensure you never miss out on the action.
 
 ## Table of Contents
 - [Introduction](#introduction)
