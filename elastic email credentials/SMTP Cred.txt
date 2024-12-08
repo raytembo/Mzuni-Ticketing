@@ -1,9 +1,0 @@
-username: mzuniticketing@gmail.com 
-
-password: 96DB7255E94BE059542DD15EA101E9453BF7 
-
-server: smtp.elasticemail.com 
-
-port: 2525 
-
-security token: 18a9c7a8-5ba4-423b-bd4d-60ea03ca1cb1
